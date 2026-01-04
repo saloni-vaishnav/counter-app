@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .counter_box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    #count {
+      margin: 0 20px;
+      min-width: 60px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    button {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #666;
+    }
+
+    h1 {
+      font-size: 36px;
+      text-align: center;
+    }
+
+    input[type="number"] {
+      border: 2px solid #888;
+      border-radius: 6px;
+      background: #222;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>counter-box</h1>
+    <div class="counter_box">
+      <button id="decrease">-</button>
+      <span id="count">0</span>
+      <button id="increase">+</button>
+    </div>
+    <div class="control">
+      <input type="number" id="step" value="1" min="1">
+      <button id="reset">reset</button>
+    </div>
+  </div>
+  <script>
+    const increaseBtn = document.getElementById('increase');
+    const decreaseBtn = document.getElementById("decrease");
+    const resetBtn = document.getElementById("reset");
+    const count = document.getElementById("count");
+    const steps=document.getElementById('step');
+    let countNum = parseInt(localStorage.getItem("count")) || 0;
+    count.textContent = countNum; colorchange(countNum);
+    increaseBtn.addEventListener("click", () => {
+      let step = parseInt(steps.value) || 1;
+      countNum+=step;
+   
+      updateCounter();
+    });
+
+    decreaseBtn.addEventListener("click", () => {
+       let step = parseInt(steps.value) || 1
+      countNum -=step;
+    updateCounter();
+    });
+    //reset
+    resetBtn.addEventListener("click", () => {
+      countNum = 0;
+      updateCounter();
+      steps.value=1;
+    });
+    function colorchange(countNum) {
+      if (countNum > 0) {
+        count.style.color = "green";
+      }
+      else if (countNum < 0) {
+        count.style.color = "red";
+      }
+      else {
+        count.style.color = "white";
+      }
+    }
+    function updateCounter() { count.textContent = countNum; 
+      colorchange(countNum);
+       localStorage.setItem("count", countNum); 
+     }
+
+
+     document.addEventListener("keydown", (event) => {
+      if (document.activeElement === stepInput) return;
+    let step = parseInt(steps.value) || 1;
+    if (event.key === "ArrowUp") {
+      countNum += step;
+      updateCounter();
+    } else if (event.key === "ArrowDown") {
+      countNum -= step;
+      updateCounter();
+    } else if (event.key.toLowerCase() === "r") {
+      countNum = 0;
+      updateCounter();
+    }
+  });
+  steps.addEventListener("keydown", (event) => {
+     if (event.key === "Enter") {
+       let step = parseInt(steps.value) || 1; countNum += step; 
+     updateCounter(); } });
+  </script>
+</body>
+
+</html>
