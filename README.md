@@ -13,3 +13,5 @@ Writing cleaner, reusable code by avoiding duplication
 ## How to Run 
 1. Clone the repo 
 2. Open `index.html` in your browser
+this is the live link ogf this mini project
+ https://saloni-vaishnav.github.io/counter-app/
